@@ -1,0 +1,37 @@
+{% if guesses is empty %}
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Hangman Game</title>
+      </head>
+      <body>
+        <h1>Hangman Game</h1>
+        <form action='/' method='post'>
+            <button type='submit'>New Game</button>
+        </form>
+      </body>
+    </html>
+
+{% else %}
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Hangman Game</title>
+      </head>
+      <body>
+        <h1>Hangman Game</h1>
+        {% set correct_guesses = guesses[0].getCorrectGuesses %}
+        {% for guess in correct_guesses %}
+            {{ guess }}
+        {% endfor %}
+        <form action="/guess_action" method="post">
+            <label for="guess_input">Make a guess: </label>
+            <input type="text" size="1" name="guess_input">
+            <button type="submit">Submit</button>
+        </form>
+        <form action='/' method='post'>
+            <button type='submit'>New Game</button>
+        </form>
+      </body>
+    </html>
+{% endif %}
