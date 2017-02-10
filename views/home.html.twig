@@ -1,3 +1,4 @@
+{% set guess_count = guesses[0].getIncorrectGuesses %}
 {% if guesses is empty %}
     <!DOCTYPE html>
     <html>
@@ -6,6 +7,28 @@
       </head>
       <body>
         <h1>Hangman Game</h1>
+        <form action='/' method='post'>
+            <button type='submit'>New Game</button>
+        </form>
+      </body>
+    </html>
+
+{% elseif guess_count|length > 5 %}
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Hangman Game</title>
+      </head>
+      <body>
+        <h1>Game Over</h1>
+        <h3>The word was: {{ guesses[0].getChosenWord }}</h3>
+        {% set incorrect_guesses = guesses[0].getIncorrectGuesses %}
+        {% if incorrect_guesses is not empty %}
+          <h3>Incorrect Guesses:</h3>
+          {% for guess in incorrect_guesses %}
+              {{ guess }}
+          {% endfor %}
+        {% endif %}
         <form action='/' method='post'>
             <button type='submit'>New Game</button>
         </form>
@@ -24,6 +47,13 @@
         {% for guess in correct_guesses %}
             {{ guess }}
         {% endfor %}
+        {% set incorrect_guesses = guesses[0].getIncorrectGuesses %}
+        {% if incorrect_guesses is not empty %}
+          <h3>Incorrect Guesses:</h3>
+          {% for guess in incorrect_guesses %}
+              {{ guess }}
+          {% endfor %}
+        {% endif %}
         <form action="/guess_action" method="post">
             <label for="guess_input">Make a guess: </label>
             <input type="text" size="1" name="guess_input">
